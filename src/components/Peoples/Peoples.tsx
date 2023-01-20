@@ -5,9 +5,9 @@ import useDispatch from "../../hooks/useDispatch";
 
 const Peoples = () => {
 
-    const {peoples} = useContext(AppContext)
+    const {peoples, dispatch} = useContext(AppContext)
 
-    let dispatch = useDispatch()
+    // let dispatch = useDispatch()
 
     useEffect(()=>{
 

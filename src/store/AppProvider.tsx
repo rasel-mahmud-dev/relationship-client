@@ -1,6 +1,8 @@
 import React, {Dispatch, FC, ReactNode, useReducer} from 'react';
 import AppContext, {ContextStateType} from "./AppContext";
 import {ACTION_TYPES, ActionTypes} from "./actionTypes";
+import {People} from "../types";
+
 
 export let dispatch: Dispatch<ActionTypes>
 
@@ -8,8 +10,12 @@ type AppProviderProps = {
     children: ReactNode
 }
 
+interface AppStateType {
+    peoples: People[]
+}
 
-const initialState: ContextStateType = {
+
+const initialState: AppStateType = {
     peoples: []
 }
 
@@ -36,7 +42,7 @@ const AppProvider:FC<AppProviderProps> = (props) => {
     // reference dispatch method
     dispatch = appDispatch;
 
-    return <AppContext.Provider value={state}>{props.children}</AppContext.Provider>
+    return <AppContext.Provider value={{...state, dispatch}}>{props.children}</AppContext.Provider>
 };
 
 export default AppProvider;
