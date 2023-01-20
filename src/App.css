@@ -1,3 +1,18 @@
 .App {
 
 }
+
+
+.active{
+    font-weight: bold;
+    color: white;
+}
+
+
+.page-title{
+    @apply text-xl font-semibold border-b-2 border-blue-600/60 w-max
+}
+
+.container{
+    @apply max-w-screen-lg mx-auto px-4;
+}
