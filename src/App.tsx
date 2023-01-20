@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
+import Peoples from "./components/Peoples/Peoples";
 
 
 function App() {
     return (
         <div className="App">
-             <h1>Hello</h1>
+             <Peoples />
         </div>
     );
 }
+
+
 
 export default App;
