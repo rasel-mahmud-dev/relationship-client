@@ -1,16 +1,13 @@
-import React, {FC, ReactNode, useReducer} from 'react';
-import AppContext from "./AppContext";
+import React, {Dispatch, FC, ReactNode, useReducer} from 'react';
+import AppContext, {ContextStateType} from "./AppContext";
 import {ACTION_TYPES, ActionTypes} from "./actionTypes";
-import {People} from "../types";
 
+export let dispatch: Dispatch<ActionTypes>
 
 type AppProviderProps = {
     children: ReactNode
 }
 
-interface ContextStateType {
-    peoples: People[]
-}
 
 const initialState: ContextStateType = {
     peoples: []
@@ -34,7 +31,10 @@ function reducer(state = initialState, action: ActionTypes){
 
 const AppProvider:FC<AppProviderProps> = (props) => {
 
-    const [state, dispatch] = useReducer(reducer, {peoples: []}, undefined)
+    const [state, appDispatch] = useReducer(reducer, {peoples: []}, undefined)
+
+    // reference dispatch method
+    dispatch = appDispatch;
 
     return <AppContext.Provider value={state}>{props.children}</AppContext.Provider>
 };
