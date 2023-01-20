@@ -1,26 +1,24 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AppContext from "../../store/AppContext";
-import {fetchAllPeoples} from "../../store/actions";
-import useDispatch from "../../hooks/useDispatch";
+import {fetchAllPeoples} from "../../store/apiRequest";
+import {People} from "../../types";
 
 const Peoples = () => {
-
-    const {peoples, dispatch} = useContext(AppContext)
-
-    // let dispatch = useDispatch()
+    const { state: {peoples}, actions} = useContext(AppContext)
 
     useEffect(()=>{
-
-        fetchAllPeoples(dispatch).then(r => {})
-
+        fetchAllPeoples<People[]>().then((data )=>{
+            actions?.setPeoples(data)
+        })
     }, [])
 
     return (
         <div>
             <h1>Peoples</h1>
             <div>
-                { peoples.map((people)=>(
-                    <div>
+                { peoples?.map((people)=>(
+                    <div role="test">
+                        <h3>List</h3>
                         <h4>{people.name}</h4>
                         <img src="https://i.pravatar.cc/100" alt=""/>
                     </div>

@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import Peoples from "./components/Peoples/Peoples";
+import {Outlet} from "react-router-dom";
 
 
 function App() {
     return (
         <div className="App">
-             <Peoples />
+            <Outlet/>
         </div>
     );
 }
-
 
 
 export default App;

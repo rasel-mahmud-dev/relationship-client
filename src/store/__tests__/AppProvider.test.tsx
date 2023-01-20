@@ -6,7 +6,7 @@ describe("App Provider", ()=>{
     it('peoples is empty by default', function () {
         const view = render(<AppProvider>
             <AppContext.Consumer>
-                {(value)=>  <span>peoples: {value.peoples.length}</span>}
+                {(value)=>  <span>peoples: {value.state.peoples.length}</span>}
             </AppContext.Consumer>
         </AppProvider>)
 

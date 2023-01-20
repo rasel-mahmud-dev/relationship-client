@@ -1,15 +1,18 @@
-import {createContext, Dispatch} from "react";
+import {createContext} from "react";
 import {People} from "../types";
-import {ActionTypes} from "./actionTypes";
 
 export interface ContextStateType {
-    dispatch: Dispatch<ActionTypes>,
-    peoples: People[]
+    state: {
+        peoples: People[]
+    },
+    actions?: {
+        setPeoples: (peoples: People[])=> void
+    }
 }
 
 export const initialState = {
-    dispatch: function (){},
-    peoples: []
+    state: {peoples: []},
+    actions: undefined
 }
 
 const AppContext = createContext<ContextStateType>(initialState)
