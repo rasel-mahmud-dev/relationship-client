@@ -8,7 +8,7 @@ const TopNavBar = () => {
     ]
     return (
         <>
-            <header className="fixed top-0 left-1/2 -translate-x-1/2 mx-auto max-w-2xl w-full bg-blue-500 rounded-md mt-2">
+            <header className="fixed top-0 left-1/2 -translate-x-1/2 mx-auto max-w-2xl w-11/12 bg-blue-500 rounded-md mt-2">
                 <nav className="flex items-center gap-x-4 justify-center">
                     {navItems.map(item=>(
                         <li key={item.label} className="list-none py-2">

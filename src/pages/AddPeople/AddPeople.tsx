@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Input from "../../components/Input/Input";
-import Select from "../../components/Select/Select";
 import Button from "../../components/Button/Button";
 import AppContext from "../../store/AppContext";
 import MultiSelect from "../../components/MultiSelect/MultiSelect";
 import axios from "axios";
-import apis from "../../apis";
 import API from "../../apis";
 import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
@@ -108,12 +106,15 @@ const AddPeople = () => {
                             placeholder="Enter People Name"/>
                     </div>
                     <div className="mt-4">
-                        <MultiSelect onUpdate={handleUpdateFriends} options={chooseFriends()} label="Friends"
-                                     name="friends" placeholder="Enter People Name"/>
+                        <MultiSelect
+                            defaultSelected={peopleData.friends}
+                            onUpdate={handleUpdateFriends} options={chooseFriends()}
+                            label="Friends"
+                            name="friends" placeholder="Enter People Name"/>
 
                     </div>
 
-                    <Button disabled={!peopleData.name} type="submit"
+                    <Button role="button" disabled={!peopleData.name} type="submit"
                             className="mt-4">{peopleName ? "Update" : "Add"} </Button>
                 </div>
             </form>

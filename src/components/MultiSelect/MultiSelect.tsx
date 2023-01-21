@@ -1,4 +1,4 @@
-import React, {FC, HTMLAttributes, SelectHTMLAttributes, useState} from 'react';
+import React, {FC, HTMLAttributes, SelectHTMLAttributes, useEffect, useState} from 'react';
 import {BiTrash} from "react-icons/bi";
 
 
@@ -6,13 +6,19 @@ interface MultiSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     options: {name: string}[]
     label?: string
     onUpdate: (friends: string[])=>void
+    defaultSelected?: string[]
 }
 
 
-const MultiSelect: FC<MultiSelectProps> = ({className = "", name, label, options, onUpdate, ...attr}) => {
+const MultiSelect: FC<MultiSelectProps> = ({className = "", defaultSelected  = [], name, label, options, onUpdate, ...attr}) => {
 
     const [state, setState] = useState<string[]>([])
 
+    useEffect(()=>{
+        if(defaultSelected && defaultSelected.length > 0 ){
+            setState(defaultSelected)
+        }
+    }, [defaultSelected])
 
     function handleAdd(e: React.ChangeEvent<HTMLSelectElement>){
        let updateState = [...state]
@@ -37,8 +43,6 @@ const MultiSelect: FC<MultiSelectProps> = ({className = "", name, label, options
         updateState = updateState.filter(item=> item !== name)
         onUpdate(updateState)
         setState(updateState)
-
-
     }
 
     return (

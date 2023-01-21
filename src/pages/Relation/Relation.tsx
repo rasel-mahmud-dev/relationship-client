@@ -20,7 +20,6 @@ const Relation = () => {
     }, [source, target, peoples])
 
 
-
     return (
         <div>
             {!relations.length ? (<h4>

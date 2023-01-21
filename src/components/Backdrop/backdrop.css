@@ -1,0 +1,23 @@
+
+.backdrop{
+    width: 100%;
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    height: 100vh;
+    background: rgba(72, 72, 72, 0.62);
+    transition:  opacity .2s ease ;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 99;
+    cursor: pointer;
+}
+
+.backdrop.open-backdrop{
+    opacity: 1;
+    visibility: visible;
+}
+.backdrop.close-backdrop{
+    opacity: 0;
+    visibility: hidden;
+}

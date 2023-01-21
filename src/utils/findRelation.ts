@@ -2,8 +2,6 @@ import {People} from "../types";
 
 function findRelation(data: People[], source: string, target: string): string[][]{
 
-
-
     let graph: { [key in string]: string[] } = {};
 
     data?.forEach((item) => {
