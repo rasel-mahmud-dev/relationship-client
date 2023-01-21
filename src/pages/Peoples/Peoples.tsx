@@ -1,17 +1,31 @@
 import React, {useContext, useEffect, useState} from 'react';
 import AppContext from "../../store/AppContext";
-import {fetchAllPeoples} from "../../store/apiRequest";
-import {People} from "../../types";
-import Button from "../Button/Button";
+import Button from "../../components/Button/Button";
+
+const images = [
+    "100.jpg",
+    "100 (1).jpg",
+    "100 (2).jpg",
+    "100 (3).jpg",
+    "100 (4).jpg",
+    "100 (5).jpg",
+    "100 (6).jpg",
+    "100 (7).jpg",
+    "100 (8).jpg",
+    "100 (9).jpg",
+    "100 (10).jpg",
+    "100 (11).jpg",
+    "100 (12).jpg",
+    "100 (13).jpg",
+    "100 (14).jpg",
+    "100 (15).jpg",
+    "100 (16).jpg",
+]
+
+
 
 const Peoples = () => {
     const {state: {peoples, selectPeople}, actions} = useContext(AppContext)
-
-    useEffect(() => {
-        peoples.length === 0 && fetchAllPeoples<People[]>().then((data) => {
-            actions?.setPeoples(data)
-        })
-    }, [])
 
     function handleSelectPeople(peopleName: string) {
         actions?.setSelectPeople(peopleName)
@@ -25,10 +39,10 @@ const Peoples = () => {
         <div>
             <h1 className="page-title">All Peoples</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:grid-cols-5 gap-4 mt-10">
-                {peoples?.map((people) => (
+                {peoples?.map((people, index) => (
                     <label className={`shadow-xss rounded-md ${makeForSelected(people.name)}`}
                            onClick={() => handleSelectPeople(people.name)}>
-                        <img className="mx-auto" src="https://i.pravatar.cc/100" alt=""/>
+                        <img className="mx-auto" src={`/images/${images[index]}`} alt=""/>
                         <h4 className="text-center font-medium text-sm text-neutral-800 mt-3 py-2">{people.name}</h4>
 
                     </label>

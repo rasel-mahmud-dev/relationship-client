@@ -36,7 +36,14 @@ const AppProvider: FC<AppProviderProps> = (props) => {
                         selectPeople: updateSelectPeople
                     }
                 })
-            }
+            },
+            addPeople: (people: People) => setAppState(prevState => ({
+                ...prevState,
+                peoples: [
+                    ...prevState.peoples,
+                    people
+                ]
+            })),
         }
     }
 

@@ -1,7 +1,7 @@
-import React, {FC, HTMLAttributes} from 'react';
+import React, {ButtonHTMLAttributes, FC} from 'react';
 
 
-interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     disabled?: boolean
 }
 
