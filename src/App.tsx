@@ -5,6 +5,8 @@ import TopNavBar from "./components/TopNavBar/TopNavBar";
 import {fetchAllPeoples} from "./store/apiRequest";
 import {People} from "./types";
 import AppContext from "./store/AppContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
 
     return (
         <div className="container">
+            <ToastContainer />
             <TopNavBar />
             <Outlet/>
         </div>

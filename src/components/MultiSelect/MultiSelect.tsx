@@ -1,4 +1,5 @@
 import React, {FC, HTMLAttributes, SelectHTMLAttributes, useState} from 'react';
+import {BiTrash} from "react-icons/bi";
 
 
 interface MultiSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -12,11 +13,13 @@ const MultiSelect: FC<MultiSelectProps> = ({className = "", name, label, options
 
     const [state, setState] = useState<string[]>([])
 
+
     function handleAdd(e: React.ChangeEvent<HTMLSelectElement>){
        let updateState = [...state]
         let { value} = e.target
 
         if(value ===  "") return
+
         if(updateState.includes(value)){
             updateState = updateState.filter(item=> item !== value)
         } else {
@@ -24,6 +27,9 @@ const MultiSelect: FC<MultiSelectProps> = ({className = "", name, label, options
         }
         onUpdate(updateState)
         setState(updateState)
+
+        // @ts-ignore
+        e.target.value = ""
     }
 
     function removeItem(name: string){
@@ -31,6 +37,8 @@ const MultiSelect: FC<MultiSelectProps> = ({className = "", name, label, options
         updateState = updateState.filter(item=> item !== name)
         onUpdate(updateState)
         setState(updateState)
+
+
     }
 
     return (
@@ -40,8 +48,9 @@ const MultiSelect: FC<MultiSelectProps> = ({className = "", name, label, options
             {(state && state.length ) ? (
                 <div className="flex items-center gap-2 mb-1">
                     {state.map(item=>(
-                        <div onClick={()=>removeItem(item)} className="text-xs font-medium bg-blue-600/30 px-3 py-1  rounded cursor-pointer">
+                        <div key={item} onClick={()=>removeItem(item)} className="flex items-center gap-x-1 text-xs font-medium bg-blue-600/30 px-3 py-1  rounded cursor-pointer">
                             {item}
+                           <BiTrash />
                         </div>
                     ))}
                 </div>
@@ -49,12 +58,13 @@ const MultiSelect: FC<MultiSelectProps> = ({className = "", name, label, options
 
             <select
                 className={`w-full border border-blue-600/10 transition transition-colors focus:border-blue-500 outline-none rounded border-1 py-1 px-3 ${className}`}
-                id={name} name={name}
+                id={name}
+                name={name}
                 onChange={handleAdd}
                 {...attr}>
                     <option value="">Select Fiends</option>
                     {options.map(opt=>(
-                        <option value={opt.name}> {opt.name} </option>
+                        <option value={opt.name} key={opt.name}> {opt.name} </option>
                     ))}
             </select>
         </div>

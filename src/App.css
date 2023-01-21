@@ -26,3 +26,9 @@ button[disabled]{
     color: #878787 !important;
     pointer-events: none;
 }
+
+input[disabled]{
+    background: #e5edff !important;
+    color: #878787 !important;
+    pointer-events: none;
+}

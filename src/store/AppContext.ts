@@ -13,6 +13,7 @@ export interface ContextStateType {
         setPeoples: (peoples: People[])=> void
         setSelectPeople: (peopleName: string)=> void
         addPeople: (people: People)=> void
+        updatedPeople: (people: People)=> void
     }
 }
 

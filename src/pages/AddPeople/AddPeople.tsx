@@ -7,11 +7,17 @@ import MultiSelect from "../../components/MultiSelect/MultiSelect";
 import axios from "axios";
 import apis from "../../apis";
 import API from "../../apis";
+import {useNavigate, useParams} from "react-router-dom";
+import {toast} from "react-toastify";
+
+import getServerErrorMessage from "../../utils/getServerErrorMessage"
+import {People} from "../../types";
 
 const AddPeople = () => {
 
     const {state: {peoples, selectPeople}, actions} = useContext(AppContext)
 
+    const {peopleName} = useParams()
 
     const [peopleData, setPeopleData] = useState<{
         name: string,
@@ -20,6 +26,18 @@ const AddPeople = () => {
         name: "",
         friends: []
     })
+
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (peopleName && peoples.length) {
+            let people = peoples.find(people => people.name === peopleName)
+            if (people) {
+                setPeopleData({name: people.name, friends: people.friends})
+            }
+        }
+    }, [peopleName, peoples])
 
 
     function handleChange(e: React.FormEvent<HTMLInputElement>) {
@@ -41,28 +59,62 @@ const AddPeople = () => {
     async function handleAddPeople(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-        let {status, data} = await axios.post(API + "/api/peoples", peopleData)
-        if(status === 201){
-            actions?.addPeople(data)
+        try {
+            if (peopleName) {
+                let {status, data} = await axios.patch(API + "/api/peoples/" + peopleName, peopleData)
+                if (status === 201) {
+                    actions?.updatedPeople(peopleData)
+                    toast.success("People has been updated")
+                    navigate("/")
+                }
+            } else {
+                let {status, data} = await axios.post(API + "/api/peoples", peopleData)
+                if (status === 201) {
+                    actions?.addPeople(data)
+                    toast.success("People has been successfully added")
+                }
+            }
+        } catch (ex) {
+            toast.error(getServerErrorMessage(ex))
         }
+    }
 
+
+    function chooseFriends() {
+        let options: People[] = []
+        if (peoples.length > 0) {
+            if (peopleName) {
+                options = peoples.filter(people => people.name !== peopleName)
+            } else {
+                options = peoples
+            }
+        }
+        return options
     }
 
     return (
         <div>
-            <h1 className="page-title">Add People</h1>
+            <h1 className="page-title">{peopleName ? "Update Friend" : "Add People"}</h1>
 
             <form onSubmit={handleAddPeople}>
                 <div className=" shadow-xl bg-white mt-8 p-4 rounded-md">
                     <div>
-                        <Input onChange={handleChange} label="People Name" name="name" placeholder="Enter People Name"/>
+                        <Input
+                            disabled={!!peopleName}
+                            onChange={handleChange}
+                            value={peopleData.name}
+                            label="People Name"
+                            name="name"
+                            placeholder="Enter People Name"/>
                     </div>
                     <div className="mt-4">
-                        <MultiSelect onUpdate={handleUpdateFriends} options={peoples} label="Friends" name="friends" placeholder="Enter People Name"/>
+                        <MultiSelect onUpdate={handleUpdateFriends} options={chooseFriends()} label="Friends"
+                                     name="friends" placeholder="Enter People Name"/>
 
                     </div>
 
-                    <Button disabled={!peopleData.name} type="submit" className="mt-4">Add</Button>
+                    <Button disabled={!peopleData.name} type="submit"
+                            className="mt-4">{peopleName ? "Update" : "Add"} </Button>
                 </div>
             </form>
         </div>

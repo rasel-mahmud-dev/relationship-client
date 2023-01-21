@@ -44,6 +44,21 @@ const AppProvider: FC<AppProviderProps> = (props) => {
                     people
                 ]
             })),
+            updatedPeople: (people: People) => setAppState(prevState => {
+                let updatedPeople = [...prevState.peoples]
+                let updatedPeopleIndex = prevState.peoples.findIndex(peo=>peo.name === people.name)
+                if(updatedPeopleIndex === -1) return prevState
+
+                updatedPeople[updatedPeopleIndex] = {
+                    ...updatedPeople[updatedPeopleIndex],
+                    ...people
+                }
+
+                return {
+                    ...prevState,
+                    peoples: updatedPeople
+                }
+            }),
         }
     }
 
