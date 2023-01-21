@@ -16,3 +16,13 @@
 .container{
     @apply max-w-screen-lg mx-auto px-4;
 }
+
+button{
+    user-select: none;
+}
+
+button[disabled]{
+    background: #bbd5ff !important;
+    color: #878787 !important;
+    pointer-events: none;
+}

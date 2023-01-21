@@ -1,17 +1,29 @@
 import {createContext} from "react";
 import {People} from "../types";
 
+
+export interface AppStateType {
+    peoples: People[],
+    selectPeople: string[]
+}
+
 export interface ContextStateType {
-    state: {
-        peoples: People[]
-    },
+    state: AppStateType,
     actions?: {
         setPeoples: (peoples: People[])=> void
+        setSelectPeople: (peopleName: string)=> void
     }
 }
 
+
+
+export const initialAppState = {
+    peoples: [],
+    selectPeople: []
+}
+
 export const initialState = {
-    state: {peoples: []},
+    state: initialAppState,
     actions: undefined
 }
 

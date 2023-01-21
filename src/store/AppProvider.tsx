@@ -1,5 +1,5 @@
 import React, {FC, ReactNode, useState} from 'react';
-import AppContext from "./AppContext";
+import AppContext, {AppStateType, initialAppState} from "./AppContext";
 
 import {People} from "../types";
 
@@ -8,27 +8,35 @@ type AppProviderProps = {
     children: ReactNode
 }
 
-interface AppStateType {
-    peoples: People[]
-}
 
+const AppProvider: FC<AppProviderProps> = (props) => {
 
-const initialState: AppStateType = {
-    peoples: []
-}
-
-
-const AppProvider:FC<AppProviderProps> = (props) => {
-
-    const [appState, setAppState] = useState<AppStateType>(initialState)
+    const [appState, setAppState] = useState<AppStateType>(initialAppState)
 
     const data = {
         state: appState,
         actions: {
-            setPeoples: (peoples: People[])=> setAppState(prevState => ({
+            setPeoples: (peoples: People[]) => setAppState(prevState => ({
                 ...prevState,
                 peoples: peoples
-            }))
+            })),
+            setSelectPeople: (peopleName: string) => {
+                setAppState((prevState) => {
+                    let updateSelectPeople = [...prevState.selectPeople]
+
+                    let ind = updateSelectPeople.indexOf(peopleName)
+                    if(ind === -1 && updateSelectPeople.length <= 1){
+                        updateSelectPeople.push(peopleName)
+                    } else {
+                        updateSelectPeople = updateSelectPeople.filter(name => name !== peopleName)
+                    }
+
+                    return  {
+                        ...prevState,
+                        selectPeople: updateSelectPeople
+                    }
+                })
+            }
         }
     }
 

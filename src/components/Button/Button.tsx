@@ -2,6 +2,7 @@ import React, {FC, HTMLAttributes} from 'react';
 
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+    disabled?: boolean
 }
 
 
